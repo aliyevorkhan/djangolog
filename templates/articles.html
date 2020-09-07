@@ -23,7 +23,7 @@
                 <!-- Post Content Column -->
                 <div class="col-lg-8">
                     <!-- Title -->
-                    <a href="/article/{{article.id}}"><h3 class="mt-4">{{article.title}}</h3></a>
+                    <a href="{% url 'article:detail' article.id %}"><h3 class="mt-4">{{article.title}}</h3></a>
                     <!-- Author -->
                     <p class="lead">
                         by
@@ -37,7 +37,7 @@
                     <hr>
                     {% if article.article_image %}
                         <!-- Preview Image -->
-                        <a href="/article/{{article.id}}">
+                        <a href="{% url 'article:detail' article.id %}">
                             <img class="img-fluid rounded" src="{{article.article_image.url}}" alt="">
                         </a>
                     {% endif %}
@@ -46,7 +46,7 @@
                     <!-- Post Content -->
                     <p class="lead">
                     {{article.content|safe|truncatewords:20}}        
-                    <a href="/article/{{article.id}}">Read more</a>
+                    <a href="{% url 'article:detail' article.id %}">Read more</a>
                     </p>
                     <hr>
                     <hr>

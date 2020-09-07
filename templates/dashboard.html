@@ -21,12 +21,12 @@
                 {% for article in articles%}
                     <tr>
                     <th scope="row">{{article.id}}</th>
-                        <td><a href="/article/{{article.id}}">{{article.title}}</a></td>
+                        <td><a href="{% url 'article:detail' article.id %}">{{article.title}}</a></td>
                         <td>{{article.author.username}}</td>
                         <td>{{article.created_date}}</td>
                         <td>
-                        <a href="/article/update/{{article.id}}" class="btn btn-warning">Update</a>
-                        <a href="/article/delete/{{article.id}}" class="btn btn-danger">Delete</a>
+                        <a href="{% url 'article:update' article.id %}" class="btn btn-warning">Update</a>
+                        <a href="{% url 'article:delete' article.id %}" class="btn btn-danger">Delete</a>
                         </td>
                     </tr>
                 
