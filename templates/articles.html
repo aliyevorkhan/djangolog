@@ -1,0 +1,70 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col-md-2 offset-md-2">
+        <h1>Articles</h1>
+        <hr>
+    </div>
+    <form class="form-inline">
+        {% csrf_token %}    
+        <div class="form-group mx-sm-3 mb-2">
+            <input type="text" class="form-control" name="keyword" placeholder="Search...">
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">Search</button>
+    </form>
+</div>
+
+{% if articles %}
+    {% for article in articles %}
+        <div class="row">
+            <div class="col-md-14 offset-md-2">
+                <!-- Post Content Column -->
+                <div class="col-lg-8">
+                    <!-- Title -->
+                    <a href="/article/{{article.id}}"><h3 class="mt-4">{{article.title}}</h3></a>
+                    <!-- Author -->
+                    <p class="lead">
+                        by
+                        {{article.author.username}}
+                    </p>
+
+                    <hr>
+
+                    <!-- Date/Time -->
+                    <p>Posted on {{article.created_date|date:"F d Y"}}<p>
+                    <hr>
+                    {% if article.article_image %}
+                        <!-- Preview Image -->
+                        <a href="/article/{{article.id}}">
+                            <img class="img-fluid rounded" src="{{article.article_image.url}}" alt="">
+                        </a>
+                    {% endif %}
+
+                    <hr>
+                    <!-- Post Content -->
+                    <p class="lead">
+                    {{article.content|safe|truncatewords:20}}        
+                    <a href="/article/{{article.id}}">Read more</a>
+                    </p>
+                    <hr>
+                    <hr>
+
+                </div>
+            </div>
+        </div>
+
+
+    {% endfor %}
+
+{% else %}        
+<div class="row">
+    <div class="col-md-6 offset-md-2">
+        <div class="alert alert-danger">
+            There is no article to shown
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock body %}
