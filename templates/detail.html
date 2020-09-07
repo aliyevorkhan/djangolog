@@ -2,41 +2,37 @@
 
 {% block body %}
 <div class="row">
+  <!-- Post Content Column -->
+  <div class="col-lg-8">
+    <!-- Title -->
+    <h1 class="mt-4">{{article.title}}</h1>
+      <!-- Author -->
+      <p class="lead">
+        by
+        {{article.author.username}}
+      </p>
 
-      <!-- Post Content Column -->
-      <div class="col-lg-8">
+    <hr>
 
-        <!-- Title -->
-        <h1 class="mt-4">{{article.title}}</h1>
-
-        <!-- Author -->
-        <p class="lead">
-          by
-          {{article.author.username}}
-        </p>
-
-        <hr>
-
-        <!-- Date/Time -->
-        <p>Posted on {{article.created_date}}<p>
-
-        <hr>
-
+    <!-- Date/Time -->
+    <p>Posted on {{article.created_date}}<p>
+    <hr>
+      {% if article.article_image %}
         <!-- Preview Image -->
-        <img class="img-fluid rounded" src="http://placehold.it/900x300" alt="">
+        <img class="img-fluid rounded" src="{{article.article_image.url}}" alt="">
+      {% endif %}
 
-        <hr>
+    <hr>
+    <!-- Post Content -->
+    <p class="lead">
+      {{article.content|safe}}        
+    </p>
 
-        <!-- Post Content -->
-        <p class="lead">
-            {{article.content}}        
-        </p>
+    <hr>
 
-        <hr>
-
-
-      </div>
 
     </div>
-    <!-- /.row -->
+
+</div>
+    
 {% endblock body %}

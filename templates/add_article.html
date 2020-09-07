@@ -6,9 +6,10 @@
 
 <div class="row">
     <div class="col-md-6 offset-md-3">
-        <h3> Create Your Own Article</h3><hr>
-        <form method = "post">
+        <h3> Create Article</h3><hr>
+        <form method = "post" enctype="multipart/form-data">
             {% csrf_token %}
+            {{form.media}}
             {{form|crispy}}<br>
             <button type="submit" class = "btn btn-info">Create</button>
 
