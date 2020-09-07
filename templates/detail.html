@@ -30,9 +30,44 @@
 
     <hr>
 
+    {% if request.user.is_authenticated %}
+      <!-- Comments Form -->
+      <div class="card my-4">
+        <h5 class="card-header">Leave a Comment:</h5>
+          <div class="card-body">
+            <form action ="{% url 'article:comment' article.id %}" method="POST">
+            {% csrf_token %}
+              <div class="form-group">
+                {% comment %} <input type="text" class="form-control" name="keyword" placeholder="Comment Author">
+                <hr> {% endcomment %}
+                <textarea name="comment_content" class="form-control" rows="3"></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">Comment</button>
+            </form>
+          </div>
+      </div>
 
-    </div>
-
-</div>
+    {% endif %}
     
+    {% if comments %}
+    {% for comment in comments %}
+      <hr>
+      <!-- Single Comment -->
+      <div class="media mb-4">
+        <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+        <div class="media-body">
+          <h5 class="mt-0">{{comment.comment_author}}</h5>
+            {{comment.comment_content}}
+            <br><small>{{comment.comment_date|date:"F d Y"}}</small>
+        </div>
+      </div>
+      <hr>
+    {% endfor %}
+    {% else %}
+      <div class="alert alert-warning">
+        There is no comment yet..
+      </div>
+    {% endif %}
+  </div>
+</div>
 {% endblock body %}

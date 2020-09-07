@@ -1,6 +1,6 @@
-from django.shortcuts import render,redirect,get_object_or_404
+from django.shortcuts import render,reverse,redirect,get_object_or_404
 from .forms import ArticleForm
-from .models import Article
+from .models import Article,Comment
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 # Create your views here.
@@ -21,7 +21,6 @@ def dashboard(request):
 @login_required(login_url='user:login')
 def add_article(request):
     form = ArticleForm(request.POST or None,request.FILES or None)
-    print(form.files)
     if form.is_valid():
         article = form.save(commit=False)
         article.author = request.user
@@ -36,8 +35,10 @@ def add_article(request):
 def detail(request, id):
     # article = Article.objects.filter(id=id).first()
     article = get_object_or_404(Article, id=id)
+    comments = article.comments.all()
     context = {
         'article':article,
+        'comments':comments,
     }
     return render(request, 'detail.html',context)
 
@@ -76,3 +77,15 @@ def articles(request):
         'articles':articles,
     }
     return render(request, 'articles.html', context)
+
+def add_comment(request,id):
+    article = get_object_or_404(Article, id=id)
+
+    if request.method == 'POST':
+        comment_author = request.user
+        comment_content = request.POST.get('comment_content')
+
+        new_comment = Comment(comment_author=comment_author, comment_content=comment_content)
+        new_comment.article = article
+        new_comment.save()
+        return redirect(reverse('article:detail', kwargs={'id':id}))
